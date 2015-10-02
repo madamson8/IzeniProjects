@@ -1,41 +1,48 @@
-# IzeniProjects
 package snake;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
-import java.awt.event.KeyEvent;
 
-public class IsKeyPressed {
-    private static boolean wPressed = false;
-    public static boolean isWPressed() {
-        synchronized (IsKeyPressed.class) {
-            return wPressed;
-        }
-    }
+import java.awt.*;
 
-    public static void main(String[] args) {
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+import javax.swing.*;
 
-            public boolean dispatchKeyEvent(KeyEvent ke) {
-                synchronized (IsKeyPressed.class) {
-                    switch (ke.getID()) {
-                    case KeyEvent.KEY_PRESSED:
-                        if (ke.getKeyCode() == KeyEvent.VK_W) {
-                            wPressed = true;
-                        }
-                        break;
+import java.util.*;
 
-                    case KeyEvent.KEY_RELEASED:
-                        if (ke.getKeyCode() == KeyEvent.VK_W) {
-                            wPressed = false;
-                        }
-                        break;
-                    }
-                    return false;
-                }
-            }
-        });
-    }
+// Top Level Window
+public class TopLevelWindow extends snake{
+	
+	static Scanner userInput = new Scanner(System.in);
+	static int x = 10;
+	static int y = 10;
+	
+	private static void createWindow() {
+		// Make the window
+		JFrame window = new JFrame("Izeni Snake");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JLabel startText = new JLabel("Please enter some dimensions somewhere between 300 - 400.",SwingConstants.CENTER);  // String Object?
+		startText.setPreferredSize(new Dimension(300, 100));  // Setting size of Text?
+		window.getContentPane().add(startText, BorderLayout.CENTER); // Adding to window
+		
+		// This displays the window
+		window.setLocationRelativeTo(null);
+		window.setSize(300, 300); // .pack() auto sets it .setSize allows entry
+		// IMPORTANT:: if you make setSize() userInput it will not work.
+		window.setResizable(true);
+		window.setVisible(true);
+		
+	}
+	
+	public void printAndReplaceArray() {
+		for(int x = 0; x < 20; x++) {
+			for(y = 0; y < 20; y++) {
+				if(gameboard[x][y] == 1) {
+					PrintArray(gameboard);
+					
+				}
+			}
+		}
+	}
+	
+	public static void main(String[] args){ 
+		createWindow();  // Will create a new window on entry
+	}
+	
 }
-
-
-if (IsKeyPressed.isWPressed()) { // call it
