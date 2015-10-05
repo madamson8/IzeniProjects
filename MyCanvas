@@ -1,0 +1,14 @@
+package snake;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import javax.swing.JFrame;
+import javax.swing.JComponent;
+
+class MyCanvas extends JComponent {
+	public void paint(Graphics g) {
+		super.paintComponent(g);
+		g.fillRect(375, 375, 50, 50); // 400 - 1/4 of size of g
+	}
+}
