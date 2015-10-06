@@ -1,0 +1,99 @@
+package snake;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.*;
+
+import javax.swing.*;
+
+import java.util.*;
+
+// Top Level Window
+public class TopLevelWindow extends JComponent implements KeyListener {
+	
+	static Scanner userInput = new Scanner(System.in);
+	
+	static int x = 10;
+	static int y = 10;
+	static int xPos;
+	static int Ypos;
+	
+	static boolean left = false;
+	static boolean right = false;
+	static boolean up = false;
+	static boolean down = false;
+	
+	private static void createWindow() {
+		// Make the window
+		JFrame window = new JFrame("Izeni Snake");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JLabel startText = new JLabel("Please enter some dimensions somewhere between 300 - 400.",SwingConstants.CENTER);  // String Object?
+		startText.setPreferredSize(new Dimension(300, 100));  // Setting size of Text?
+		window.getContentPane().add(startText, BorderLayout.CENTER); // Adding to window
+		window.getContentPane().add(new MyCanvas());
+		
+		window.setSize(560, 585); // .pack() auto sets it .setSize allows entry
+		// IMPORTANT:: if you make setSize() userInput it will not work.
+		window.setResizable(false);
+		window.setVisible(true); // This displays the window
+		window.setLocationRelativeTo(null);
+	}
+	int[] myPlayer = new int[1]; //START OF MYCANVAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	public void paint(Graphics g) {
+		super.paintComponent(g);
+		for(int x = 5; x < 501; x += 55) { // creates the gameboard. The player will switch
+			for(int y = 5; y < 501; y += 55) { //between array spots to see where he is.
+				g.fillRect(x, y, 50, 50); //if you want to change this you need to multiply
+				
+			} // 55 by the number of rows and collumns and add 1.  You also may need to change
+		}// the size of the window.  It is set unresizable so the game does'nt get messed up.
+		if(left == true) {
+			g.fillRect(5, 5, 50, 50);
+		}
+	}
+		//END OF MYCANVAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		boolean focused = false;
+		
+	public void keyPressed(KeyEvent evt) {
+		int key = evt.getKeyCode();
+		
+		if(key == KeyEvent.VK_LEFT) { // declare var for key than use like so.  Arrow Key Input
+			//These are for the key being pressed, not released
+			left = true;
+			System.out.println("Success");
+			repaint();
+		}
+		else if(key == KeyEvent.VK_RIGHT) {
+			right = true;
+		}
+		else if(key == KeyEvent.VK_UP) {
+			up = true;
+		}
+		else if(key == KeyEvent.VK_DOWN) {
+			down = true;
+		}
+	} //end of keyPressed
+	public void keyReleased(KeyEvent evt) {
+		//This method remains empty but is required by the implementation.
+	}
+	public void keyTyped(KeyEvent evt) {
+		//This is empty as well, mainly used if you want a certain character as input.
+	}
+	public void init() {
+		addKeyListener(this);
+	}
+	
+	public static void main(String[] args){ 
+		createWindow();  // Will create a new window on entry
+		while(true) {
+			keyPressed(key);
+			if(left == true) {
+				createWindow();
+				System.out.println("Success");// Prints success if Left is recognized
+
+			}
+		}
+
+	}
+	
+}
