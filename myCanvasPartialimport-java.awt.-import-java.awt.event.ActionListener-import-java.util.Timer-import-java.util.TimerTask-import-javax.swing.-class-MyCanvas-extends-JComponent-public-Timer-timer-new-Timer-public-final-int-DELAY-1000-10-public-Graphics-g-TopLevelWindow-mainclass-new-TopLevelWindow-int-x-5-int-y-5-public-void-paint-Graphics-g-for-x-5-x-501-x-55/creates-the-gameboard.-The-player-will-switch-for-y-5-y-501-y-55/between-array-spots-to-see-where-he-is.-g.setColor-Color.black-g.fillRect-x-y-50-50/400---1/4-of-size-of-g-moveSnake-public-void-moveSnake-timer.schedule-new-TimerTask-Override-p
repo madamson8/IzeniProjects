@@ -1,0 +1,41 @@
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.*;
+
+class MyCanvas extends JComponent {
+    public Timer timer = new Timer();
+    public final int DELAY = 1000 * 10;
+    public Graphics g;
+    TopLevelWindow mainclass = new TopLevelWindow();
+
+
+    int x = 5;
+    int y = 5;
+
+    public void paint(Graphics g) {
+        for (x = 5; x < 501; x += 55) { // creates the gameboard. The player will switch
+            for (y = 5; y < 501; y += 55) { //between array spots to see where he is.
+                g.setColor(Color.black);
+                g.fillRect(x, y, 50, 50); // 400 - 1/4 of size of g
+            }
+        }
+        moveSnake();
+    }
+
+    public void moveSnake(){
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //g.setColor(Color.black);
+                //paint(g);
+                g.setColor(Color.green);
+                mainclass.move();
+                g.fillRect(mainclass.snakex, mainclass.snakey, 55, 55);
+            }
+        }, DELAY);
+
+    }
+}
