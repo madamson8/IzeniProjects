@@ -1,0 +1,100 @@
+import java.awt.*;
+import java.awt.event.*;
+
+import javax.swing.*;
+
+import java.util.*;
+
+// Top Level Window
+public class TopLevelWindow extends JComponent implements KeyListener {
+
+    static Scanner userInput = new Scanner(System.in);
+
+    static boolean left = false;
+    static boolean right = true;
+    static boolean up = false;
+    static boolean down = false;
+
+    public static int snakex = 5;
+    public static int snakey = 5;
+
+    private static void createWindow() {
+        // Make the window
+        JFrame window = new JFrame("Izeni Snake");
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel startText = new JLabel("Please enter some dimensions somewhere between 300 - 400.",SwingConstants.CENTER);  // String Object?
+        startText.setPreferredSize(new Dimension(300, 100));  // Setting size of Text?
+        window.getContentPane().add(startText, BorderLayout.CENTER); // Adding to window
+        window.getContentPane().add(new MyCanvas());
+        // MyCanvas canvasclass = new MyCanvas();
+        //window.getContentPane().add(new canvasclass.moveSnake());
+
+        window.setSize(560, 585); // .pack() auto sets it .setSize allows entry
+        // IMPORTANT:: if you make setSize() userInput it will not work.
+        window.setResizable(false);
+        window.setVisible(true); // This displays the window
+        window.setLocationRelativeTo(null);
+    }
+
+    boolean focused = false;
+
+    public void keyPressed(KeyEvent evt) {
+        int key = evt.getKeyCode();
+
+        if(key == KeyEvent.VK_LEFT) { // declare var for key than use like so.  Arrow Key Input
+            //These are for the key being pressed, not released
+            left = true;
+            right = false;
+            down = false;
+            up = false;
+            System.out.println("Success");
+            repaint();
+        }
+        else if(key == KeyEvent.VK_RIGHT) {
+            right = true;
+            up = false;
+            down = false;
+            left = false;
+        }
+        else if(key == KeyEvent.VK_UP) {
+            up = true;
+            down = false;
+            left = false;
+            right = false;
+        }
+        else if(key == KeyEvent.VK_DOWN) {
+            down = true;
+            up = false;
+            right = false;
+            left = false;
+        }
+    } //end of keyPressed
+    public void keyReleased(KeyEvent evt) {
+        //This method remains empty but is required by the implementation.
+    }
+    public void keyTyped(KeyEvent evt) {
+        //This is empty as well, mainly used if you want a certain character as input.
+    }
+    public void init() {
+        addKeyListener(this);
+    }
+    public static void move(){
+        if(left){
+            snakex -= 50;
+        }
+        if(right){
+            snakex += 50;
+        }
+        if(up){
+            snakey -= 50;
+        }
+        if(down){
+            snakey += 50;
+        }
+    }
+
+    public static void main(String[] args){
+        createWindow();
+    }
+
+}
