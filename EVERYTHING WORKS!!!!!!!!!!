@@ -1,0 +1,119 @@
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.LinkedList;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+
+class Bullet {
+    Point position = new Point(0, 0);
+    Point velocity = new Point(0, 0);
+    int radius = 1;
+
+    public void move() {
+        position.x += velocity.x;
+        position.y += velocity.y;
+    }
+}
+
+
+class Snake {
+    LinkedList<Point> tail = null;
+    Point velocity = new Point(0, 0);
+    int size = 30;
+
+    public void reset() {
+        tail = new LinkedList<>();
+        tail.addLast(new Point(300, 300));
+        velocity = new Point(0, 0);
+    }
+
+    public void move() {
+        Point head = tail.getFirst();
+        Point newpoint = new Point(head.x + velocity.x, head.y + velocity.y);
+        tail.addFirst(newpoint);
+        while (tail.size() > size) {
+            tail.removeLast();
+        }
+    }
+
+    public void limitVelocity() {
+        int magnitudeSq = velocity.x * velocity.x + velocity.y * velocity.y;
+        if (magnitudeSq > 5) {
+            if (velocity.x > 0) velocity.x -= 1;
+            if (velocity.x < 0) velocity.x += 1;
+            if (velocity.y > 0) velocity.y -= 1;
+            if (velocity.y < 0) velocity.y += 1;
+        }
+    }
+}
+
+@SuppressWarnings("serial")
+public class Game extends JPanel implements KeyListener {
+    Snake snake = new Snake();
+    private void moveBall() {
+
+    }
+    @Override
+    public void paint(Graphics g) {
+        int squareWidth = 5;
+        int squareHeight = 5;
+
+        super.paint(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        for (int i = 0; i < snake.size; i++){
+            g2d.fillRect(snake.tail.get(i).x, snake.tail.get(i).y, squareWidth, squareHeight);
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        // Set up the main window
+        JFrame frame = new JFrame("Sample Frame");
+        Game game = new Game();
+        game.addKeyListener(game);
+        frame.add(game);
+        frame.setFocusable(true);
+        frame.setSize(600, 600);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.requestFocusInWindow();
+        frame.setLocationRelativeTo(null);
+
+        // Set up the game
+        game.snake.reset();
+        while (true) {
+            game.snake.move();
+            game.moveBall();
+            game.repaint();
+            Thread.sleep(1000 / 60);
+        }
+    }
+
+    public void keyTyped(KeyEvent e) {
+        //System.out.println("keyTyped: "+e);
+    }
+    public void keyPressed(KeyEvent e) {
+        switch(e.getKeyCode()) {
+            case 37:
+                snake.velocity.x -= 1;
+                break;
+            case 39:
+                snake.velocity.x += 1;
+                break;
+            case 38:
+                snake.velocity.y -= 1;
+                break;
+            case 40:
+                snake.velocity.y += 1;
+                break;
+        }
+        snake.limitVelocity();
+    }
+    public void keyReleased(KeyEvent e) {
+        //System.out.println("keyReleased: "+e);
+    }
+
+}
