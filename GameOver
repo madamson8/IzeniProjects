@@ -1,0 +1,26 @@
+public void gameOver() {
+        System.out.println("Game Over!");
+    }
+
+    public void isOnEdge() {
+        if(snake.tail.get(0).x > 600) {
+            gameOver();
+            snake.velocity.x = 0;
+            snake.velocity.y = 0;
+        }
+        else if(snake.tail.get(0).x < 0) {
+            gameOver();
+            snake.velocity.x = 0;
+            snake.velocity.y = 0;
+        }
+        else if(snake.tail.get(0).y > 600) {
+            gameOver();
+            snake.velocity.x = 0;
+            snake.velocity.y = 0;
+        }
+        else if(snake.tail.get(0).y < 0) {
+            snake.velocity.x = 0;
+            snake.velocity.y = 0;
+            gameOver();
+        }
+    }
