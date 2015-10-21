@@ -1,0 +1,20 @@
+private void customUpdate() {
+        if (snake.tail.get(0).x > enemyX) {
+            enemyX += 1;
+        } else {
+            enemyX -= 1;
+        }
+        if (snake.tail.get(0).y > enemyY) {
+            enemyY += 1;
+        } else {
+            enemyY -= 1;
+        }
+        if (snake.tail.get(0).x == enemyX && snake.tail.get(0).y == enemyY) {
+            snake.velocity.x = 0;
+            snake.velocity.y = 0;
+            if(running) {
+                gameOver();
+                running = false;
+            }
+        }
+    }
