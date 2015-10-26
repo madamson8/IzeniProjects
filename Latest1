@@ -1,0 +1,125 @@
+/**
+ * Created by ma039102 on 10/23/2015.
+ */
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+@SuppressWarnings("serial")
+public class game extends JPanel implements KeyListener, MouseListener {  //   START OF GAME CLASS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    int charX = 200;
+    int charY = 200;
+
+    public static boolean mouseIsInside = false;
+
+    /*int mouseY = MouseInfo.getPointerInfo().getLocation().y;
+    int mouseX = MouseInfo.getPointerInfo().getLocation().x;*/
+
+    public void customUpdate() {//           START OF CUSTOMUPDATE()
+
+    }
+
+    public void pythTheorum() { // START OF PYTHTHEORUM()
+
+    }
+    public void paint(Graphics g) {  //     START OF PAINT
+        int charWidth = 5;
+        int charHeight = 5;
+        super.paint(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setColor(Color.ORANGE);
+        g.fillRect(charX,charY, charWidth,charHeight);
+        g.setColor(Color.DARK_GRAY);
+
+    }
+
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case 37:
+                charX += 4;
+                System.out.println("Left");
+                break;
+            case 39:
+                charX -= 4;
+                System.out.println("Right");
+                break;
+            case 38:
+                System.out.println("Up");
+                break;
+            case 40:
+                System.out.println("Down");
+                break;
+        }
+    }
+
+    public void mousePressed(MouseEvent e) {
+        int mouseX = e.getX();
+        int mouseY = e.getY(); // !!!!!!!!!!!!!!!!!!IMPORTANT THIS WILL GET THE X AND Y RELATIVE TO THE COMPUTER SCREEN.  IT WILL NOT GET X AND Y OF THE WINDOW
+        if (mouseX > 0 && mouseX < 400) {
+            mouseIsInside = true;
+
+        }
+    }
+
+
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    public static void main(String args[]) throws InterruptedException {
+        int windowW = 400; // ints
+        int windowH = 400;
+        JFrame window = new JFrame("My Game");
+
+        game game = new game();
+
+        window.add(game);
+        game.addMouseListener(game);
+        game.addKeyListener(game);
+        window.setFocusable(true);
+
+        window.setSize(windowW,windowH);
+        window.setResizable(false);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setVisible(true);
+
+        game.requestFocusInWindow();
+        window.setLocationRelativeTo(null);
+
+        while(true) { // Main Game loop
+
+            if(mouseIsInside) {
+
+                mouseIsInside = false;
+            }
+
+        }
+    }
+}
